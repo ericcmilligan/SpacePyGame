@@ -4,10 +4,11 @@ WIDTH, HEIGHT = 900, 500
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Space Pong")
 MIDDLEYELLOW = (237, 177, 131)
+BLACK = (140, 72, 67)
 FPS = 60
 SPACESHIP_WIDTH, SPACESHIP_HEIGHT = 165, 120
 VEL = 5
-
+BORDER = pygame.Rect(WIDTH/2 - 5, 0, 10, HEIGHT)
 
 YELLOW_SPACESHIP_IMAGE = pygame.image.load("Assets/spaceship_yellow.png")
 YELLOW_SPACESHIP = pygame.transform.rotate \
@@ -21,7 +22,7 @@ def draw_window(red, yellow):
     WIN.fill(MIDDLEYELLOW)
     WIN.blit(YELLOW_SPACESHIP, (yellow.x, yellow.y))
     WIN.blit(RED_SPACESHIP, (red.x, red.y))
-
+    pygame.draw.rect(WIN, BLACK, BORDER)
     pygame.display.update()
 
 def yellow_handle_movement(keys_pressed, yellow):
