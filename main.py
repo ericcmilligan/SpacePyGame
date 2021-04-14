@@ -1,4 +1,5 @@
 import pygame
+pygame.font.init()
 
 WIDTH, HEIGHT = 900, 500
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -7,6 +8,7 @@ MIDDLEYELLOW = (237, 177, 131)
 BLACK = (255, 255, 255)
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
+WHITE = (0, 0, 0)
 FPS = 60
 SPACESHIP_WIDTH, SPACESHIP_HEIGHT = 165, 120
 VEL = 5
@@ -26,6 +28,7 @@ RED_SPACESHIP = pygame.transform.rotate \
 
 SPACE = pygame.transform.scale(pygame.image.load("Assets/space.jpg"), (WIDTH, HEIGHT))
 
+HEALTH_FONT = pygame.font.SysFont("comicsans", 40)
 
 def handle_bullets(yellow_bullets, red_bullets, yellow, red):
     for bullet in yellow_bullets:
@@ -46,12 +49,14 @@ def handle_bullets(yellow_bullets, red_bullets, yellow, red):
 
 
 
-def draw_window(red, yellow, red_bullets, yellow_bullets):
+def draw_window(red, yellow, red_bullets, yellow_bullets, red_health, yellow_health):
     WIN.blit(SPACE, (0, 0))
     WIN.blit(YELLOW_SPACESHIP, (yellow.x, yellow.y))
     WIN.blit(RED_SPACESHIP, (red.x, red.y))
     pygame.draw.rect(WIN, BLACK, BORDER)
-
+    red_health = HEALTH_FONT.render(f"Health: {red_health} ", 1, WHITE)
+    yellow_health = HEALTH_FONT.render(f"Health: {yellow_health} ", 1, WHITE)
+    WIN.blit(red_health, (WIDTH - red_health.get_width() - 10, 10))
     for bullet in red_bullets:
         pygame.draw.rect(WIN, RED, bullet)
 
@@ -116,6 +121,8 @@ def main():
             winner_text = "Yellow Wins!"
         if yellow_health <= 0:
             winner_text = "Red Wins!"
+        if winner_text != "":
+            pass
 
         print(red_bullets, yellow_bullets)
         keys_pressed = pygame.key.get_pressed()
@@ -125,7 +132,7 @@ def main():
         handle_bullets(yellow_bullets, red_bullets, yellow, red)
 
 
-        draw_window(red, yellow, red_bullets, yellow_bullets)
+        draw_window(red, yellow, red_bullets, yellow_bullets, red_health, yellow_health)
 
     pygame.quit()
 
